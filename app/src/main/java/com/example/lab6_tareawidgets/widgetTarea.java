@@ -39,9 +39,9 @@ public class widgetTarea extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
 
-            //actualizarWidget(context,appWidgetManager, appWidgetId);
+            fecha_gonzalo(context,appWidgetManager, appWidgetId);
 
-            test_gonzalo(context,appWidgetManager, appWidgetId);
+            actualizarWidget(context,appWidgetManager, appWidgetId);
         }
     }
 
@@ -61,25 +61,26 @@ public class widgetTarea extends AppWidgetProvider {
 
         SharedPreferences datos = context.getSharedPreferences("DatosWidget",Context.MODE_PRIVATE);
 
-
-        String mensaje = datos.getString("mensaje","mensaje Recibido:");
+        String ciudad = datos.getString("ciudad","Ciudad");
+        String distrito = datos.getString("distrito","Distrito");
 
         RemoteViews controles = new RemoteViews(context.getPackageName(),R.layout.widget_tarea);
-        //controles.setTextViewText(R.id.lblMensaje,mensaje);
-
-        SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss a");
-        Date now = new Date();
-        String hora = sdfDate.format(now);
-        controles.setTextViewText(R.id.txt_hora,hora);
-
+        controles.setTextViewText(R.id.txt_ubicacion,ciudad);
+        controles.setTextViewText(R.id.txt_distrito,distrito);
         appWidgetManager.updateAppWidget(widgetId,controles);
+
+
+
+
+
+
 
 
 
     }
 
 
-    public static void test_gonzalo(Context context, AppWidgetManager appWidgetManager, int widgetId){
+    public static void fecha_gonzalo(Context context, AppWidgetManager appWidgetManager, int widgetId){
 
         RemoteViews controles = new RemoteViews(context.getPackageName(),R.layout.widget_tarea);
 

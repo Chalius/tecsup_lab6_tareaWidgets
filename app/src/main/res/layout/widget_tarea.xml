@@ -32,10 +32,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
+            android:layout_weight="0.5"
             android:text="hora"
             android:textColor="#FFFFFF"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#A4000000"
+            />
 
         <TextView
             android:id="@+id/textView"
@@ -47,11 +51,16 @@
             android:id="@+id/txt_fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             android:layout_marginRight="70dp"
             android:text="fecha"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="22sp"
+            android:textStyle="bold"
+
+            android:gravity="center"
+            android:background="#A4000000"
+            />
     </LinearLayout>
 
 
@@ -63,15 +72,37 @@
         android:orientation="horizontal">
 
 
-        <TextView
-            android:id="@+id/txt_ubicacion"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
             android:layout_marginLeft="50dp"
-            android:text="ubicación"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            >
+
+            <TextView
+                android:id="@+id/txt_ubicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="#A4000000"
+                android:text="ubicación"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_distrito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="#A4000000"
+                android:text="Distrito"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView2"
@@ -86,8 +117,11 @@
             android:layout_marginRight="70dp"
             android:text="Temperatura"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#A4000000"
+            />
     </LinearLayout>
 
 

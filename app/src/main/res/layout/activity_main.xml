@@ -35,4 +35,10 @@
         android:layout_marginTop="28dp"
         android:text="distrito" />
 
+    <Button
+        android:id="@+id/btn_enviar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enviar" />
+
 </LinearLayout>
