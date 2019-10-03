@@ -25,4 +25,14 @@
         android:layout_marginTop="28dp"
         android:text="Button" />
 
+    <TextView
+        android:id="@+id/txtciudad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ciudad"
+        android:layout_marginStart="108dp"
+        android:layout_marginLeft="108dp"
+        android:layout_marginTop="28dp"
+        />
+
 </LinearLayout>

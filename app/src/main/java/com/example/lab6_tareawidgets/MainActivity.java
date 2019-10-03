@@ -8,6 +8,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,6 +18,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
     Button btnGPS;
     TextView tvUbicacion;
 
-    double latitud;
+    double latitud=0;
     double longitud;
 
-
+    TextView txtciudad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,39 @@ public class MainActivity extends AppCompatActivity {
 
         tvUbicacion = findViewById(R.id.tvUbicacion);
         btnGPS = findViewById(R.id.button);
+        txtciudad = findViewById(R.id.txtciudad);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         btnGPS.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +109,16 @@ public class MainActivity extends AppCompatActivity {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
+                // averiguar ciudad
 
+                try {
+                    if(latitud!=0) {
+                        String ciudad = getMyCity(latitud, longitud);
+                        txtciudad.setText(ciudad);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 
             }
@@ -94,4 +143,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public String getMyCity(Double latitud,Double longitud) throws IOException {
+        String myCity = "";
+
+        Geocoder geocoder = new Geocoder(
+                MainActivity.this,
+                Locale.getDefault());
+        List<Address> addresses = geocoder.getFromLocation(latitud,longitud,1);
+        //String address = addresses.get(0).getAddressLine(0);
+        myCity = addresses.get(0).getLocality();//getlocality se puede cambiar por otra cosa como:pais
+
+        return myCity;
+    }
+
 }
