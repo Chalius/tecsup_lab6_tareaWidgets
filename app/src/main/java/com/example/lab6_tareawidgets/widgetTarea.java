@@ -4,11 +4,17 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+
 import android.widget.RemoteViews;
-import android.widget.TextView;
+
+
+
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+
 
 /**
  * Implementation of App Widget functionality.
@@ -63,13 +69,29 @@ public class widgetTarea extends AppWidgetProvider {
 
         String ciudad = datos.getString("ciudad","Ciudad");
         String distrito = datos.getString("distrito","Distrito");
+        String temperatura = datos.getString("temperatura","temperatura recibida")+"°C Actual";
+        String temp_max = datos.getString("temp_max","temp_max recibida")+"°C Máxima";
+        String temp_min = datos.getString("temp_min", "temp_min recibida")+"°C Mínima";
+        String cielo = datos.getString("cielo","cielo recibido");
+
 
         RemoteViews controles = new RemoteViews(context.getPackageName(),R.layout.widget_tarea);
         controles.setTextViewText(R.id.txt_ubicacion,ciudad);
         controles.setTextViewText(R.id.txt_distrito,distrito);
+        controles.setTextViewText(R.id.txt_temperatura,temperatura);
+        controles.setTextViewText(R.id.temp_max,temp_max);
+        controles.setTextViewText(R.id.temp_min,temp_min);
+        controles.setTextViewText(R.id.txt_cielo,cielo);
+
+
+        if(cielo.equals("Clouds")){
+            controles.setImageViewResource(R.id.imagen_nubes,R.drawable.cloud);
+        }
+
+
         appWidgetManager.updateAppWidget(widgetId,controles);
 
-
+        //int id=R.drawable.clouds1;
 
 
 
@@ -98,6 +120,12 @@ public class widgetTarea extends AppWidgetProvider {
 
         appWidgetManager.updateAppWidget(widgetId,controles);
     }
+
+
+
+
+
+
 
 
 }

@@ -23,16 +23,39 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+
+
+
+
+
+
+
+
+
 
 public class MainActivity extends AppCompatActivity {
 
     TextView tvUbicacion,txtciudad,txtdistrito;
+
+    TextView txttemperatura;
+    Button btnapi;
+
 
     private int widgetId = 0;
     double latitud=0;
@@ -40,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     String ubicacion[] ;
 
     Button btnenviar;
+
+    String temp,temp_min,temp_max,cielo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnenviar = findViewById(R.id.btn_enviar);
 
+        txttemperatura = findViewById(R.id.txt_temperatura);
+        btnapi =findViewById(R.id.btn_api);
 
         getUbicacion();
 
@@ -61,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 sendDataToWidget();
+            }
+        });
+
+        btnapi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                find_weather();
             }
         });
 
@@ -186,6 +221,13 @@ public class MainActivity extends AppCompatActivity {
         try{
             editor.putString("ciudad", ubicacion[0]);
             editor.putString("distrito",ubicacion[1]);
+            //editor.putString("latitud",""+latitud);
+            //editor.putString("longitud", ""+longitud);
+            editor.putString("temperatura", temp);
+            editor.putString("temp_max", temp_max);
+            editor.putString("temp_min",temp_min);
+            editor.putString("cielo",cielo);
+
             //aplica cambios
             editor.commit();
 
@@ -202,8 +244,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void find_weather(){
 
-    
+
+        String url="https://api.openweathermap.org/data/2.5/weather?lat="+latitud+"&lon="+longitud+"&appid=c78a8d2bc11d77f8fd5f922ee00a9c24&units=metric";
+
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject main_object = response.getJSONObject("main");
+                            JSONArray array = response.getJSONArray("weather");
+                            JSONObject object = array.getJSONObject(0);
+
+                            temp = String.valueOf(main_object.getDouble("temp"));
+                            temp_min = String.valueOf(main_object.getDouble("temp_min"));
+                            temp_max = String.valueOf(main_object.getDouble("temp_max"));
+                            cielo = object.getString("main");
+                            String description = object.getString("description");
+                            String city = response.getString("name");
+
+                            txttemperatura.setText(temp);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(),
+                                    "error con la API",Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(jor);
+
+
+    }
+
 
 
 }
